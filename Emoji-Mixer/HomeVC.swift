@@ -2,7 +2,7 @@ import UIKit
 
 class HomeVC: UIViewController {
   
-  private let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewLayout())
+  private let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
   private let reuseCellID = "Cell"
   private let emojiSet = [
     "🍇", "🍈", "🍉", "🍊", "🍋", "🍌", "🍍", "🥭", "🍎",
@@ -22,7 +22,7 @@ class HomeVC: UIViewController {
     registerClassesForReuse()
     collectionView.translatesAutoresizingMaskIntoConstraints = false
     view.addSubview(collectionView)
-    view.backgroundColor = .green
+    view.backgroundColor = .white
     setConstraints()
   }
   
@@ -33,7 +33,6 @@ class HomeVC: UIViewController {
       collectionView.leadingAnchor.constraint(equalTo: view.layoutMarginsGuide.leadingAnchor),
       collectionView.trailingAnchor.constraint(equalTo: view.layoutMarginsGuide.trailingAnchor)
     ])
-    collectionView.backgroundColor = .blue
   }
   
   func registerClassesForReuse() {
@@ -55,7 +54,6 @@ extension HomeVC: UICollectionViewDataSource {
       for: indexPath
     ) as? EmojiCollectionView else { return .init() }
     
-    cell.backgroundColor = .black
     cell.emojiLabel.text = emojiSet[indexPath.row]
     return cell
   }
@@ -71,9 +69,20 @@ extension HomeVC: UICollectionViewDelegateFlowLayout {
     sizeForItemAt indexPath: IndexPath
   ) -> CGSize {
     
-    return .init(width: 50, height: 50)
+    return .init(width: collectionView.bounds.width / 2, height: 50)
   }
+  
+  func collectionView(
+    _ collectionView: UICollectionView,
+    layout collectionViewLayout: UICollectionViewLayout,
+    minimumInteritemSpacingForSectionAt section: Int
+  ) -> CGFloat {
+    return 0
+  }
+
 }
+
+
 
 
 extension HomeVC: UICollectionViewDelegate {
