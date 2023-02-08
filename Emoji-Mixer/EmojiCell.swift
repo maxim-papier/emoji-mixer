@@ -1,6 +1,6 @@
 import UIKit
 
-class EmojiCollectionView: UICollectionViewCell {
+class EmojiCell: UICollectionViewCell {
   
   let emojiLabel = UILabel()
   
