@@ -4,53 +4,46 @@ class HomeVC: UIViewController {
 
     private let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
     private let reuseCellID = "Cell"
-    private let emojiSet = [
-        "🍇", "🍈", "🍉", "🍊", "🍋", "🍌", "🍍", "🥭", "🍎",
-        "🍏", "🍐", "🍒", "🍓", "🫐", "🥝", "🍅", "🫒", "🥥",
-        "🥑", "🍆", "🥔", "🥕", "🌽", "🌶️", "🫑", "🥒", "🥬",
-        "🥦", "🧄", "🧅", "🍄"
-    ]
-    private var visibleEmojis: [String] = []
+    private var visibleEmojis: [EmojiMix] = []
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
         if let navBar = navigationController?.navigationBar {
-
-            let leftButton = UIBarButtonItem(barButtonSystemItem: .undo, target: self, action: #selector(undoLastEmoji))
+            //            let leftButton = UIBarButtonItem(barButtonSystemItem: .undo, target: self, action: #selector(undoLastEmoji))
+            //            navBar.topItem?.setLeftBarButton(leftButton, animated: true)
             let rightButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addNextEmoji))
-            navBar.topItem?.setLeftBarButton(leftButton, animated: true)
             navBar.topItem?.setRightBarButton(rightButton, animated: true)
         }
         setUp()
     }
 
 
-    @objc
-    private func undoLastEmoji() {
-
-        guard visibleEmojis.count > 0 else { return }
-
-        let lastEmojiIndex = visibleEmojis.count - 1
-        visibleEmojis.removeLast()
-        collectionView.performBatchUpdates {
-            collectionView.performBatchUpdates {
-                collectionView.deleteItems(at: [IndexPath(item: lastEmojiIndex, section: 0)])
-            }
-        }
-    }
+    //    @objc
+    //    private func undoLastEmoji() {
+    //
+    //        guard visibleEmojis.count > 0 else { return }
+    //
+    //        let lastEmojiIndex = visibleEmojis.count - 1
+    //        visibleEmojis.removeLast()
+    //        collectionView.performBatchUpdates {
+    //            collectionView.performBatchUpdates {
+    //                collectionView.deleteItems(at: [IndexPath(item: lastEmojiIndex, section: 0)])
+    //            }
+    //        }
+    //    }
 
     @objc
     private func addNextEmoji() {
 
-        guard visibleEmojis.count < emojiSet.count else { return }
 
-        let nextEmojiIndex = visibleEmojis.count
-        visibleEmojis.append(emojiSet[nextEmojiIndex])
+        let newEmojiMix = EmojiMixFactory().maketEmojiMix()
+        visibleEmojis.append(newEmojiMix)
+        let newIndex = visibleEmojis.count - 1
+
         collectionView.performBatchUpdates {
-            collectionView.insertItems(at: [IndexPath(item: nextEmojiIndex, section: 0)])
+            collectionView.insertItems(at: [IndexPath(item: newIndex, section: 0)])
         }
-
     }
 
 
@@ -58,7 +51,6 @@ class HomeVC: UIViewController {
         registerClassesForReuse()
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(collectionView)
-        view.backgroundColor = .white
         setConstraints()
         collectionView.dataSource = self
         collectionView.delegate = self
@@ -70,8 +62,9 @@ class HomeVC: UIViewController {
             collectionView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             collectionView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
             collectionView.leadingAnchor.constraint(equalTo: view.layoutMarginsGuide.leadingAnchor),
-            collectionView.trailingAnchor.constraint(equalTo: view.layoutMarginsGuide.trailingAnchor)
+            collectionView.trailingAnchor.constraint(equalTo: view.layoutMarginsGuide.trailingAnchor),
         ])
+        collectionView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
     }
 
     func registerClassesForReuse() {
@@ -93,8 +86,13 @@ extension HomeVC: UICollectionViewDataSource {
             for: indexPath
         ) as? EmojiCell else { return .init() }
 
-        cell.emojiLabel.text = visibleEmojis[indexPath.row]
+        cell.titleLabel.text = visibleEmojis[indexPath.row].emojis
+        cell.backgroundColor = visibleEmojis[indexPath.row].backgroundColor
         return cell
+    }
+
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return 10
     }
 }
 
@@ -108,7 +106,8 @@ extension HomeVC: UICollectionViewDelegateFlowLayout {
         sizeForItemAt indexPath: IndexPath
     ) -> CGSize {
 
-        return .init(width: collectionView.bounds.width / 2, height: 50)
+        return .init(width: (collectionView.bounds.width - 10) / 2,
+                     height: (collectionView.bounds.width - 10) / 2)
     }
 
     func collectionView(
@@ -118,12 +117,5 @@ extension HomeVC: UICollectionViewDelegateFlowLayout {
     ) -> CGFloat {
         return 0
     }
-
-}
-
-
-
-
-extension HomeVC: UICollectionViewDelegate {
 
 }

@@ -13,6 +13,10 @@
 		8D1E8460298E08E50026BF36 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8D1E845E298E08E50026BF36 /* LaunchScreen.storyboard */; };
 		8D1E8468298E0B3F0026BF36 /* HomeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D1E8467298E0B3F0026BF36 /* HomeVC.swift */; };
 		8D1E846A298E0FAB0026BF36 /* EmojiCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D1E8469298E0FAB0026BF36 /* EmojiCell.swift */; };
+		8D2949F629AC746800913E4C /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 8D2949F429AC746800913E4C /* Model.xcdatamodeld */; };
+		8D2949F829ADAE4B00913E4C /* EmojiMixFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D2949F729ADAE4B00913E4C /* EmojiMixFactory.swift */; };
+		8D2949FA29ADEB1C00913E4C /* EmojiMixStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D2949F929ADEB1C00913E4C /* EmojiMixStore.swift */; };
+		8DEB6BD529AEF18F00668D70 /* EmojiMix.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DEB6BD429AEF18F00668D70 /* EmojiMix.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +28,10 @@
 		8D1E8461298E08E50026BF36 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8D1E8467298E0B3F0026BF36 /* HomeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeVC.swift; sourceTree = "<group>"; };
 		8D1E8469298E0FAB0026BF36 /* EmojiCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmojiCell.swift; sourceTree = "<group>"; };
+		8D2949F529AC746800913E4C /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
+		8D2949F729ADAE4B00913E4C /* EmojiMixFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmojiMixFactory.swift; sourceTree = "<group>"; };
+		8D2949F929ADEB1C00913E4C /* EmojiMixStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmojiMixStore.swift; sourceTree = "<group>"; };
+		8DEB6BD429AEF18F00668D70 /* EmojiMix.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmojiMix.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,8 +64,9 @@
 		8D1E8452298E08E40026BF36 /* Emoji-Mixer */ = {
 			isa = PBXGroup;
 			children = (
-				8D1E8469298E0FAB0026BF36 /* EmojiCell.swift */,
-				8D1E8467298E0B3F0026BF36 /* HomeVC.swift */,
+				8DEB6BD829AEF1C300668D70 /* Core Data */,
+				8DEB6BD629AEF1A500668D70 /* Models */,
+				8DEB6BD729AEF1B300668D70 /* UI */,
 				8D1E845C298E08E50026BF36 /* Assets.xcassets */,
 				8D1E845E298E08E50026BF36 /* LaunchScreen.storyboard */,
 				8D1E8461298E08E50026BF36 /* Info.plist */,
@@ -65,6 +74,33 @@
 				8D1E8455298E08E40026BF36 /* SceneDelegate.swift */,
 			);
 			path = "Emoji-Mixer";
+			sourceTree = "<group>";
+		};
+		8DEB6BD629AEF1A500668D70 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				8DEB6BD429AEF18F00668D70 /* EmojiMix.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		8DEB6BD729AEF1B300668D70 /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				8D1E8469298E0FAB0026BF36 /* EmojiCell.swift */,
+				8D1E8467298E0B3F0026BF36 /* HomeVC.swift */,
+			);
+			path = UI;
+			sourceTree = "<group>";
+		};
+		8DEB6BD829AEF1C300668D70 /* Core Data */ = {
+			isa = PBXGroup;
+			children = (
+				8D2949F929ADEB1C00913E4C /* EmojiMixStore.swift */,
+				8D2949F729ADAE4B00913E4C /* EmojiMixFactory.swift */,
+				8D2949F429AC746800913E4C /* Model.xcdatamodeld */,
+			);
+			path = "Core Data";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -139,6 +175,10 @@
 			files = (
 				8D1E8468298E0B3F0026BF36 /* HomeVC.swift in Sources */,
 				8D1E8454298E08E40026BF36 /* AppDelegate.swift in Sources */,
+				8D2949F829ADAE4B00913E4C /* EmojiMixFactory.swift in Sources */,
+				8DEB6BD529AEF18F00668D70 /* EmojiMix.swift in Sources */,
+				8D2949FA29ADEB1C00913E4C /* EmojiMixStore.swift in Sources */,
+				8D2949F629AC746800913E4C /* Model.xcdatamodeld in Sources */,
 				8D1E8456298E08E40026BF36 /* SceneDelegate.swift in Sources */,
 				8D1E846A298E0FAB0026BF36 /* EmojiCell.swift in Sources */,
 			);
@@ -356,6 +396,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		8D2949F429AC746800913E4C /* Model.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				8D2949F529AC746800913E4C /* Model.xcdatamodel */,
+			);
+			currentVersion = 8D2949F529AC746800913E4C /* Model.xcdatamodel */;
+			path = Model.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 8D1E8448298E08E30026BF36 /* Project object */;
 }
