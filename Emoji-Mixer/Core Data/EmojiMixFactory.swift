@@ -9,10 +9,10 @@ final class EmojiMixFactory {
         "🥦", "🧄", "🧅", "🍄"
     ]
 
-    func maketEmojiMix() -> EmojiMix {
+    func makeEmojiMix() -> EmojiMix {
         let mix = makeNewMix(emojiSet)
-        let color = makeBackGroundColor(mix)
-        let emojiMix = EmojiMix(emojis: mix, backgroundColor: color)
+        let color = makeBackGroundColorHue(mix)
+        let emojiMix = EmojiMix(emojis: mix, backgroundColorHue: color)
         return emojiMix
     }
     
@@ -22,18 +22,13 @@ final class EmojiMixFactory {
         return joinedEmojis
     }
 
-    private func makeBackGroundColor(_ emojis: String) -> UIColor {
-        let hashValue = CGFloat(abs(emojis.hashValue))
-        let hashRounded = CGFloat(Int(hashValue) % 1000) / 1000.0
-        let color = UIColor(hue: hashRounded, saturation: 0.3, brightness: 1, alpha: 1)
-
-        print("hashValue = \(hashValue)")
-        print("hashRounded = \(hashRounded)")
-
-        return color
+    private func makeBackGroundColorHue(_ emojis: String) -> Float {
+        let hashValue = Float(abs(emojis.hashValue))
+        let hashRounded = Float(Int(hashValue) % 1000) / 1000.0
+        let hue = hashRounded
+        return hue
     }
 }
-
 
 extension CGFloat {
     func rounded(toDecimalPlaces places: Int) -> CGFloat {

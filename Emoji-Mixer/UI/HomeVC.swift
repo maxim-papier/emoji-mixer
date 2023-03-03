@@ -2,50 +2,59 @@ import UIKit
 
 class HomeVC: UIViewController {
 
+    private let emojiMixFactory = EmojiMixFactory()
+    private let emojiMixStore = EmojiMixStore()
+
     private let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
     private let reuseCellID = "Cell"
     private var visibleEmojis: [EmojiMix] = []
 
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        do {
+            visibleEmojis = try emojiMixStore.fetchEmojiMixes()
+        } catch {
+            print("Error fetching emoji mixes: \(error.localizedDescription)")
+        }
+
         if let navBar = navigationController?.navigationBar {
-            //            let leftButton = UIBarButtonItem(barButtonSystemItem: .undo, target: self, action: #selector(undoLastEmoji))
-            //            navBar.topItem?.setLeftBarButton(leftButton, animated: true)
             let rightButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addNextEmoji))
+            let leftButton = UIBarButtonItem(barButtonSystemItem: .trash, target: self, action: #selector(cleanDB))
             navBar.topItem?.setRightBarButton(rightButton, animated: true)
+            navBar.topItem?.setLeftBarButton(leftButton, animated: true)
+
         }
         setUp()
     }
 
-
-    //    @objc
-    //    private func undoLastEmoji() {
-    //
-    //        guard visibleEmojis.count > 0 else { return }
-    //
-    //        let lastEmojiIndex = visibleEmojis.count - 1
-    //        visibleEmojis.removeLast()
-    //        collectionView.performBatchUpdates {
-    //            collectionView.performBatchUpdates {
-    //                collectionView.deleteItems(at: [IndexPath(item: lastEmojiIndex, section: 0)])
-    //            }
-    //        }
-    //    }
-
     @objc
     private func addNextEmoji() {
 
+        let newEmojiMix = emojiMixFactory.makeEmojiMix()
+        let newEmojiMixIndex = visibleEmojis.count
+        let newItemIndexPath = IndexPath(item: visibleEmojis.count - 1, section: 0)
+        collectionView.scrollToItem(at: newItemIndexPath, at: .top, animated: true)
 
-        let newEmojiMix = EmojiMixFactory().maketEmojiMix()
-        visibleEmojis.append(newEmojiMix)
-        let newIndex = visibleEmojis.count - 1
+        try! emojiMixStore.addNewEmojiMix(newEmojiMix)
+        visibleEmojis = try! emojiMixStore.fetchEmojiMixes()
 
         collectionView.performBatchUpdates {
-            collectionView.insertItems(at: [IndexPath(item: newIndex, section: 0)])
+            collectionView.insertItems(at: [IndexPath(item: newEmojiMixIndex, section: 0)])
         }
     }
 
+    @objc
+    private func cleanDB() {
+
+        try! emojiMixStore.cleanDB {
+            DispatchQueue.main.async { [self] in
+                visibleEmojis = []
+                collectionView.reloadData()
+            }
+        }
+    }
 
     func setUp() {
         registerClassesForReuse()
